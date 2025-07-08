@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryyn Digital Store - Random Produk & Script</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #1a237e; /* Biru tua */
+            --secondary-color: #3f51b5; /* Biru sedang */
+            --accent-color: #ffeb3b; /* Kuning aksen */
+            --text-color: #ffffff;
+            --button-hover-color: #ffeb3b;
+            --button-text-color: #1a237e;
+            --panel-bg-color: rgba(255, 255, 255, 0.1);
+            --border-radius: 10px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --modal-bg: rgba(0, 0, 0, 0.7);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 50%;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 2.2em;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav button {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav button:hover {
+            background-color: var(--accent-color);
+            color: var(--button-text-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-section {
+            margin-bottom: 60px;
+        }
+
+        .hero-section h2 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-section p {
+            font-size: 1.3em;
+            max-width: 800px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+        }
+
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .category-button {
+            background-color: var(--secondary-color);
+            border: none;
+            color: var(--text-color);
+            padding: 20px 40px;
+            border-radius: var(--border-radius);
+            font-size: 1.5em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transition: all 0.5s ease-out;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .category-button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .category-button:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background-color: var(--accent-color);
+            color: var(--button-text-color);
+        }
+
+        .category-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-display {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .product-card {
+            background-color: var(--panel-bg-color);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            width: 300px; /* Adjusted width */
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-card img {
+            width: 300px; /* Fixed width as requested */
+            height: 300px; /* Fixed height as requested */
+            object-fit: cover; /* Ensure image covers the area */
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .product-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+            line-height: 1.5;
+            min-height: 75px; /* Ensure description has minimum height */
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-card .price {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            flex-grow: 1; /* Push button to bottom */
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .buy-button {
+            background-color: var(--accent-color);
+            border: none;
+            color: var(--button-text-color);
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            width: 100%; /* Make button full width of card */
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .buy-button:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            background-color: #ffd700; /* Slightly darker yellow on hover */
+        }
+
+        /* Modal Base */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--primary-color);
+            margin: auto;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.4s ease-out;
+            border: 2px solid var(--accent-color);
+        }
+
+        .close-button {
+            color: var(--accent-color);
+            font-size: 3em;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .modal-content h2 {
+            font-size: 2.5em;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Payment Modal Specific */
+        #paymentModal .modal-content img {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            border: 3px solid var(--accent-color);
+        }
+
+        #paymentModal .modal-content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+        }
+
+        .confirm-whatsapp-button {
+            background-color: #25d366; /* WhatsApp green */
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .confirm-whatsapp-button:hover {
+            background-color: #1da851;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirm-whatsapp-button i {
+            font-size: 1.4em;
+        }
+
+        /* Contact Section */
+        #contact-section {
+            background-color: var(--secondary-color);
+            padding: 60px 20px;
+            text-align: center;
+            width: 100%;
+            box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            margin-top: 60px;
+            max-width: 800px;
+            margin-bottom: 60px; /* Added margin-bottom */
+        }
+
+        #contact-section h2 {
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #contact-section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+        }
+
+        .contact-button {
+            background-color: var(--accent-color);
+            border: none;
+            color: var(--button-text-color);
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.3em;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            background-color: #ffd700;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Push footer to bottom */
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* AI Chat Modal */
+        #aiChatModal {
+            display: none;
+            position: fixed;
+            z-index: 200; /* Higher z-index than payment modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ai-chat-content {
+            background-color: var(--primary-color);
+            margin: auto;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            height: 80%;
+            max-height: 700px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: fadeIn 0.4s ease-out;
+            border: 2px solid var(--accent-color);
+        }
+
+        .ai-chat-content h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: var(--accent-color);
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-message-ai, .chat-message-user {
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .chat-message-ai {
+            background-color: var(--secondary-color);
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .chat-message-user {
+            background-color: var(--accent-color);
+            color: var(--button-text-color);
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+        .chat-input-area-ai {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-area-ai input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--accent-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1em;
+            outline: none;
+        }
+
+        .chat-input-area-ai button {
+            background-color: var(--accent-color);
+            color: var(--button-text-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .chat-input-area-ai button:hover {
+            background-color: #ffd700;
+        }
+
+        #aiChatLoading {
+            text-align: center;
+            padding: 10px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Linktree Modal */
+        #linktreeModal {
+            display: none;
+            position: fixed;
+            z-index: 201; /* Higher than AI chat modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .linktree-content {
+            background-color: var(--primary-color);
+            margin: auto;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.4s ease-out;
+            border: 2px solid var(--accent-color);
+        }
+
+        .linktree-content h2 {
+            font-size: 2.2em;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+        }
+
+        .linktree-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .linktree-button {
+            background-color: var(--secondary-color);
+            border: 2px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none; /* For anchor tags */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .linktree-button:hover {
+            background-color: var(--accent-color);
+            color: var(--button-text-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 10px;
+            }
+
+            nav button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .hero-section h2 {
+                font-size: 2.5em;
+            }
+
+            .hero-section p {
+                font-size: 1em;
+            }
+
+            .category-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .category-button {
+                width: 80%;
+                padding: 15px 30px;
+                font-size: 1.2em;
+            }
+
+            .product-card {
+                width: 90%;
+                padding: 20px;
+            }
+            .product-card img {
+                width: 100%;
+                height: auto; /* Adjust height for responsiveness */
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+
+            .modal-content h2 {
+                font-size: 2em;
+            }
+
+            #paymentModal .modal-content img {
+                width: 90%;
+            }
+
+            #contact-section h2 {
+                font-size: 2em;
+            }
+
+            .ai-chat-content, .linktree-content {
+                width: 95%;
+                height: auto;
+                max-height: 90%;
+                padding: 20px;
+            }
+            .ai-chat-content h2, .linktree-content h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <audio id="background-audio" loop>
+        <source src="https://files.catbox.moe/l5sdd2.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <header>
+        <div class="logo">
+            <img src="https://files.catbox.moe/0yn3f5.jpg" alt="Ryyn Logo">
+            <h1>Ryyn Digital Store</h1>
+        </div>
+        <nav>
+            <button onclick="scrollToSection('home-section')"><i class="fas fa-home"></i> Beranda</button>
+            <button onclick="scrollToSection('products-section')"><i class="fas fa-box"></i> Produk</button>
+            <button onclick="scrollToSection('contact-section')"><i class="fas fa-headset"></i> Kontak Admin</button>
+            <button onclick="openLinktreeModal()"><i class="fas fa-share-alt"></i> Linktree</button>
+            <button onclick="openAIChatModal()"><i class="fas fa-robot"></i> Chat AI</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home-section" class="hero-section">
+            <h2>Selamat Datang di Ryyn Digital Store</h2>
+            <p>Solusi Terbaik untuk Kebutuhan Digital Anda. Kami menyediakan berbagai produk digital dan script berkualitas tinggi.</p>
+        </section>
+
+        <section id="products-section">
+            <h2>Pilih Kategori Produk Anda</h2>
+            <div class="category-buttons">
+                <button class="category-button" data-category="random"><span><i class="fas fa-dice"></i> Random Produk</span></button>
+                <button class="category-button" data-category="script"><span><i class="fas fa-code"></i> Script</span></button>
+            </div>
+
+            <div class="product-display" id="random-products" style="display: flex;">
+                <div class="product-card" data-price="5000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Nokos & Murnok VIP">
+                    <h3>Nokos & Murnok VIP</h3>
+                    <p>Nomor kontak siap pakai dan nomor murni VIP.</p>
+                    <div class="price">Rp 5.000</div>
+                    <button class="buy-button" data-product="Nokos & Murnok VIP">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="3000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Jasa Rename SC">
+                    <h3>Jasa Rename SC</h3>
+                    <p>Ubah nama script sesuai keinginan Anda.</p>
+                    <div class="price">Rp 3.000</div>
+                    <button class="buy-button" data-product="Jasa Rename SC">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="5000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Ubah SC Bot Scan to Pairing Code">
+                    <h3>Ubah SC Bot Scan to Pairing Code</h3>
+                    <p>Konversi script bot Anda ke format pairing code.</p>
+                    <div class="price">Rp 5.000</div>
+                    <button class="buy-button" data-product="Ubah SC Bot Scan to Pairing Code">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price-text="Sesuai List">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Suntik All Sosmed">
+                    <h3>Suntik All Sosmed</h3>
+                    <p>Suntik followers/likes/views untuk semua media sosial. Harga sesuai list.</p>
+                    <div class="price">Sesuai List</div>
+                    <button class="buy-button" data-product="Suntik All Sosmed">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="5000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Reseller Sosmed">
+                    <h3>Reseller Sosmed</h3>
+                    <p>Paket reseller untuk layanan media sosial.</p>
+                    <div class="price">Rp 5.000</div>
+                    <button class="buy-button" data-product="Reseller Sosmed">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="5000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Pembuatan Web Hosting Dll">
+                    <h3>Pembuatan Web Hosting Dll</h3>
+                    <p>Jasa pembuatan website, hosting, dan lainnya.</p>
+                    <div class="price">Rp 5.000</div>
+                    <button class="buy-button" data-product="Pembuatan Web Hosting Dll">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="2000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="Pembuatan Logo JB">
+                    <h3>Pembuatan Logo JB</h3>
+                    <p>Jasa desain logo khusus untuk akun jualan.</p>
+                    <div class="price">Rp 2.000</div>
+                    <button class="buy-button" data-product="Pembuatan Logo JB">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <div class="product-display" id="script-products" style="display: none;">
+                <div class="product-card" data-price="3000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="SC Jaga Group Only">
+                    <h3>SC Jaga Group Only</h3>
+                    <p>Script otomatis untuk menjaga keamanan dan ketertiban grup Anda.</p>
+                    <div class="price">Rp 3.000</div>
+                    <button class="buy-button" data-product="SC Jaga Group Only">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="3000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="SC Push Kontak Only">
+                    <h3>SC Push Kontak Only</h3>
+                    <p>Script untuk efisiensi dalam mengelola dan mengirim pesan ke kontak.</p>
+                    <div class="price">Rp 3.000</div>
+                    <button class="buy-button" data-product="SC Push Kontak Only">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="5000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="SC Bug Ryyn V1.0">
+                    <h3>SC Bug Ryyn V1.0</h3>
+                    <p>Script dengan fitur eksklusif Ryyn versi 1.0.</p>
+                    <div class="price">Rp 5.000</div>
+                    <button class="buy-button" data-product="SC Bug Ryyn V1.0">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="10000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="SC Bug Ryyn V1.1 Free Update">
+                    <h3>SC Bug Ryyn V1.1 (Free Update)</h3>
+                    <p>Versi terbaru dengan pembaruan gratis dan fitur lebih canggih.</p>
+                    <div class="price">Rp 10.000</div>
+                    <button class="buy-button" data-product="SC Bug Ryyn V1.1 Free Update">Beli Sekarang</button>
+                </div>
+                <div class="product-card" data-price="5000">
+                    <img src="https://files.catbox.moe/nzz09w.jpg" alt="SC MD 1500 Fitur">
+                    <h3>SC MD 1500 Fitur</h3>
+                    <p>Script multi-fungsi dengan lebih dari 1500 fitur.</p>
+                    <div class="price">Rp 5.000</div>
+                    <button class="buy-button" data-product="SC MD 1500 Fitur">Beli Sekarang</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-section">
+            <h2>Butuh Bantuan? Hubungi Admin Kami!</h2>
+            <p>Jika Anda memiliki pertanyaan lebih lanjut, ingin berdiskusi tentang produk, atau memerlukan bantuan teknis, jangan ragu untuk menghubungi admin kami.</p>
+            <button class="contact-button" onclick="window.open('https://wa.me/6283119396819?text=Halo%20Admin%20Ryyn%20Digital%20Store,%20saya%20punya%20pertanyaan%20tentang%20produk.', '_blank')"><i class="fab fa-whatsapp"></i> Chat Admin Via WhatsApp</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Ryyn Digital Store. All rights reserved.</p>
+    </footer>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closePaymentModal()">×</span>
+            <h2>Pembayaran Produk <span id="productNameInModal"></span></h2>
+            <img src="https://files.catbox.moe/agdnq4.jpg" alt="QRIS RYYN">
+            <p>Silakan lakukan pembayaran melalui QRIS di atas. Setelah pembayaran berhasil, konfirmasi ke admin kami melalui WhatsApp.</p>
+            <p><b>Cara Kerja Setelah Transfer:</b></p>
+            <ol style="text-align: left; max-width: 400px; margin: 0 auto 20px auto; list-style-position: inside;">
+                <li>Pilih produk yang diinginkan.</li>
+                <li>Bayar lewat QRIS (unduh gambar ini jika perlu).</li>
+                <li>Pencet tombol "Konfirmasi Pembayaran ke Admin" di bawah.</li>
+                <li>Tunggu admin kami memproses pesanan Anda.</li>
+            </ol>
+            <p style="font-weight: bold; color: var(--accent-color);">Catatan: Mohon jangan spam, admin akan membalas satu per satu.</p>
+            <button class="confirm-whatsapp-button" onclick="confirmPayment()"><i class="fab fa-whatsapp"></i> Konfirmasi Pembayaran ke Admin</button>
+        </div>
+    </div>
+
+    <div id="aiChatModal" class="modal">
+        <div class="ai-chat-content">
+            <span class="close-button" onclick="closeAIChatModal()">×</span>
+            <h2><i class="fas fa-robot"></i> Ryyn AI Assistant</h2>
+            <div class="chat-messages" id="aiChatMessages">
+                <div class="chat-message-ai">Halo! Saya Ryyn AI Assistant. Ada yang bisa saya bantu?</div>
+            </div>
+            <div class="chat-input-area-ai">
+                <input type="text" id="aiChatMessageInput" placeholder="Ketik pertanyaan Anda...">
+                <button id="sendAIChatMessageBtn"><i class="fas fa-paper-plane"></i> Kirim</button>
+            </div>
+            <p id="aiChatLoading" style="display: none;">AI sedang mengetik...</p>
+        </div>
+    </div>
+
+    <div id="linktreeModal" class="modal">
+        <div class="linktree-content">
+            <span class="close-button" onclick="closeLinktreeModal()">×</span>
+            <h2><i class="fas fa-share-alt"></i> sosmed admin!</h2>
+            <div class="linktree-buttons">
+                <a href="https://wa.me/6283119396819" target="_blank" class="linktree-button"><i class="fab fa-whatsapp"></i> WhatsApp Admin</a>
+                <a href="https://www.youtube.com/channel/your_youtube_channel_id" target="_blank" class="linktree-button"><i class="fab fa-youtube"></i> YouTube Ryyn Shop</a>
+                <a href="https://whatsapp.com/channel/0029Vb6EHtR5Ui2gHMW9zX2x" target="_blank" class="linktree-button"><i class="fab fa-whatsapp-square"></i> Saluran WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Konfigurasi ---
+        const ADMIN_WA_NUMBER = '6283119396819'; // Ganti dengan nomor WhatsApp admin Anda
+        const YOUTUBE_URL = 'https://www.youtube.com/channel/your_youtube_channel_id'; // Ganti dengan URL Channel YouTube Anda
+        const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029Vb6EHtR5Ui2gHMW9zX2x'; // Ganti dengan URL Saluran WhatsApp Anda
+        const GEMINI_API_KEY = 'AIzaSyA9AtbP1D_m0WwpBw8OJfrCBOZWah7ApmI'; // API Key Gemini Anda
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+        
+        // --- Audio Auto-play ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('background-audio');
+            audio.volume = 0.2; // Atur volume agar tidak terlalu keras
+            audio.play().catch(e => {
+                console.warn("Autoplay was prevented:", e);
+                // Fallback for browsers that block autoplay: offer a play button
+                const playButton = document.createElement('button');
+                playButton.textContent = 'Putar Audio Latar';
+                playButton.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 1000; padding: 10px 20px; background-color: var(--accent-color); color: var(--button-text-color); border: none; border-radius: 5px; cursor: pointer;';
+                playButton.onclick = () => {
+                    audio.play();
+                    playButton.remove();
+                };
+                document.body.appendChild(playButton);
+            });
+        });
+
+        // --- Smooth Scrolling ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Pengaturan Kategori Produk ---
+        document.querySelectorAll('.category-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.dataset.category;
+                document.getElementById('random-products').style.display = 'none';
+                document.getElementById('script-products').style.display = 'none';
+
+                if (category === 'random') {
+                    document.getElementById('random-products').style.display = 'flex';
+                } else if (category === 'script') {
+                    document.getElementById('script-products').style.display = 'flex';
+                }
+
+                document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        // Set kategori Random Produk sebagai aktif secara default saat dimuat
+        document.querySelector('.category-button[data-category="random"]').classList.add('active');
+
+
+        // --- Logika Modal Pembayaran ---
+        const paymentModal = document.getElementById('paymentModal');
+        const productNameInModal = document.getElementById('productNameInModal');
+        let currentProduct = '';
+        let currentProductPrice = ''; 
+
+        document.querySelectorAll('.buy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                currentProduct = this.dataset.product;
+                const productCard = this.closest('.product-card');
+                // Check if data-price exists, if not, use data-price-text
+                currentProductPrice = productCard.dataset.price ? 
+                                      `Rp ${parseFloat(productCard.dataset.price).toLocaleString('id-ID')}` : 
+                                      productCard.dataset.priceText;
+                
+                productNameInModal.textContent = currentProduct;
+                paymentModal.style.display = 'flex';
+            });
+        });
+
+        function closePaymentModal() {
+            paymentModal.style.display = 'none';
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target == paymentModal) {
+                closePaymentModal();
+            }
+        });
+
+        function confirmPayment() {
+            const transactionId = Math.random().toString(36).substring(2, 10).toUpperCase(); // ID Transaksi sederhana
+            const currentTime = new Date().toLocaleString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            const whatsappMessage = `Halo Admin, segera konfirmasi produk saya!\n\nID Transaksi: ${transactionId}\nProduk: ${currentProduct}\nHarga: ${currentProductPrice}\nWaktu: ${currentTime}\n\nTerima kasih sudah order di ryyn shop store`;
+            window.open(`https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+        }
+
+        // --- Logika Modal Chat AI Gemini ---
+        const aiChatModal = document.getElementById('aiChatModal');
+        const aiChatMessages = document.getElementById('aiChatMessages');
+        const aiChatMessageInput = document.getElementById('aiChatMessageInput');
+        const sendAIChatMessageBtn = document.getElementById('sendAIChatMessageBtn');
+        const aiChatLoading = document.getElementById('aiChatLoading');
+
+        // Riwayat chat untuk konteks Gemini
+        const chatHistory = [];
+
+        // Prompt awal Gemini
+        const initialPrompt = {
+            role: "user",
+            parts: [{ text: "kamu adalah admin ryyn yang siap membantu kapan pun, kamu merespon dengan nada ramah, dan jika ada user bilang admin mana bilang aja admin sedang sibuk, dan jika user nanya bagaimana atau gimana cara buy atau beli produk ini kamu menjawab 1. pilih produk 2. bayar lewat qris (unduh dulu gambar nya) 3. pencet konfirmasi admin atau pembayaran 4. tunggu admin proses note: jangan spam nanti admin akan balas 1 1, dan jika user nanya kontak admin kasih tau di bagian kontak admin ada di tampilan awal ,dan jika user marah marah atau toxic kamu jawab Apasih kalo mau marah jangan di sini gw juga punya perasaan Bangsat dan jika ada user nanya siapa yang ciptakan kamu atau siapa yang nyiptain lu kamu menjawab saya di ciptakan oleh bos ryyn dengan berbasis ai, dan saya di tugas kan untuk membantu anda yang kesulitan menggunakan website produk ini dan jika user nanya siapa lu, lu siapa, ini ai? kamu menjawab saya admin ai ryyn untuk membantu anda dan jika user bilang kode voucher diskon bang kamu menjawab kode nya : R23YN ,dengan note konfirmasi dan tukerkan di admin" }]
+        };
+        chatHistory.push(initialPrompt);
+
+        function openAIChatModal() {
+            aiChatModal.style.display = 'flex';
+        }
+
+        function closeAIChatModal() {
+            aiChatModal.style.display = 'none';
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target == aiChatModal) {
+                closeAIChatModal();
+            }
+        });
+
+        async function sendAIChatMessage() {
+            const userMessageText = aiChatMessageInput.value.trim();
+            if (!userMessageText) return;
+
+            addAIChatMessage(userMessageText, 'user');
+            aiChatMessageInput.value = '';
+            aiChatLoading.style.display = 'block';
+
+            chatHistory.push({ role: "user", parts: [{ text: userMessageText }] });
+
+            try {
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: chatHistory,
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 200,
+                        },
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Gemini API Error:', errorData);
+                    addAIChatMessage('Maaf, ada masalah saat menghubungi AI. Coba lagi nanti.', 'ai');
+                    return;
+                }
+
+                const data = await response.json();
+                const aiResponse = data.candidates[0].content.parts[0].text;
+                addAIChatMessage(aiResponse, 'ai');
+
+                chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+
+            } catch (error) {
+                console.error('Error fetching from Gemini API:', error);
+                addAIChatMessage('Maaf, ada kesalahan koneksi. Mohon periksa internet Anda atau coba lagi.', 'ai');
+            } finally {
+                aiChatLoading.style.display = 'none';
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+            }
+        }
+
+        function addAIChatMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(sender === 'user' ? 'chat-message-user' : 'chat-message-ai');
+            messageDiv.textContent = text;
+            aiChatMessages.appendChild(messageDiv);
+            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+        }
+
+        sendAIChatMessageBtn.addEventListener('click', sendAIChatMessage);
+        aiChatMessageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendAIChatMessage();
+            }
+        });
+
+        // --- Logika Linktree Modal ---
+        const linktreeModal = document.getElementById('linktreeModal');
+        
+        function openLinktreeModal() {
+            // Update the actual hrefs with the provided links
+            document.querySelector('.linktree-button[href*="wa.me"]').href = `https://wa.me/${ADMIN_WA_NUMBER}`;
+            document.querySelector('.linktree-button[href*="youtube.com"]').href = YOUTUBE_URL;
+            document.querySelector('.linktree-button[href*="whatsapp.com/channel"]').href = WHATSAPP_CHANNEL_URL;
+
+            linktreeModal.style.display = 'flex';
+        }
+
+        function closeLinktreeModal() {
+            linktreeModal.style.display = 'none';
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target == linktreeModal) {
+                closeLinktreeModal();
+            }
+        });
+    </script>
+</body>
+</html>
